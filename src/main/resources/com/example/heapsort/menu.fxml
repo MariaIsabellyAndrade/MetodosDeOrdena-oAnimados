@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefWidth="600.0" prefHeight="400.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.heapsort.Controller.MenuController"
+            style="-fx-background-color: linear-gradient(to bottom, #87CEFA, #FFFFFF);">
+
+    <children>
+        <!-- Título -->
+        <Label layoutX="50" layoutY="50" text="Animação de dois Métodos de Ordenação"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2F4F4F;"/>
+
+        <!-- Botões centralizados -->
+        <Button fx:id="btHeap" layoutX="150" layoutY="200" text="HeapSort"
+                style="-fx-font-size: 16px; -fx-background-color: #FFA500; -fx-text-fill: white;"
+                onAction="#abrirHeapSort"/>
+
+        <Button fx:id="btTim" layoutX="350" layoutY="200" text="TimSort"
+                style="-fx-font-size: 16px; -fx-background-color: #1E90FF; -fx-text-fill: white;"
+                onAction="#abrirTimSort"/>
+
+    </children>
+</AnchorPane>

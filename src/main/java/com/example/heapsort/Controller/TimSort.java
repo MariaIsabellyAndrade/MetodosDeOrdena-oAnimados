@@ -1,4 +1,7 @@
 package com.example.heapsort.Controller;
+
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
 import java.util.Random;
@@ -6,169 +9,190 @@ import java.util.Stack;
 
 public class TimSort {
 
+    @FXML
+    private Button bt0, bt1, bt2, bt3, bt4, bt5, btIniciar;
+
+    private Button[] vet;       // vetor de botões
     public int[] vetOriginal = new int[6];
+    private int minRun = 32;
 
+    @FXML
+    public void initialize() {
+        vet = new Button[]{bt0, bt1, bt2, bt3, bt4, bt5};
+        Random random = new Random();
 
-    private int calculaRun(int variavel) {
-        int r = 0;
-        while (variavel >= 32) {
-            r |= (variavel & 1);
-            variavel >>= 1;
+        double larguraPane = 600; // largura do Pane igual ao HeapSort
+        double spacing = 80;       // mesmo espaçamento
+        double offsetX = (larguraPane - (vet.length - 1) * spacing) / 2; // centraliza
+
+        for (int i = 0; i < vet.length; i++) {
+            vetOriginal[i] = random.nextInt(100);
+            vet[i].setText(String.valueOf(vetOriginal[i]));
+            vet[i].setLayoutX(offsetX + i * spacing); // X centralizado
+            vet[i].setLayoutY(100);                   // Y igual ao HeapSort
         }
-        return variavel + r;
-    }
-    private int  minRun = calculaRun(vetOriginal.length);
-
-    private int[] inverte(int inicio, int fim, int[] vetor) {
-        int i = inicio, j=fim, aux;
-        while(i < j) {
-            aux = vetor[i];
-            vetor[i]= vetor[j];
-            vetor[j] = aux;
-            i++;
-            j--;
-        }
-        return vetor;
     }
 
-    private void InsertSort(int[] vetOriginal, int inicio, int fim, int auxRun) {
+    @FXML
+    private void acaoIniciar() {
+        new Thread(() -> TimSortAnimado()).start();
+    }
+    private void trocarBotoesAnimados(int x, int j) {
+        double startX0 = vet[x].getLayoutX();
+        double startX1 = vet[j].getLayoutX();
+        double distancia = startX1 - startX0; // pode ser negativo
+        int passos = (int) (Math.abs(distancia) / 6);
+
+        // Determina a direção horizontal
+        double dx = distancia / passos; // passo horizontal
+        double dy = 6;                  // passo vertical
+
+        // Sobe/Desce os botões
+        for (int i = 0; i < passos; i++) {
+            Platform.runLater(() -> {
+                vet[x].setLayoutY(vet[x].getLayoutY() + dy);
+                vet[j].setLayoutY(vet[j].getLayoutY() - dy);
+            });
+            sleep(50);
+        }
+
+        // Move na horizontal
+        for (int i = 0; i < passos; i++) {
+            Platform.runLater(() -> {
+                vet[x].setLayoutX(vet[x].getLayoutX() + dx);
+                vet[j].setLayoutX(vet[j].getLayoutX() - dx);
+            });
+            sleep(50);
+        }
+
+        // Volta para altura original
+        for (int i = 0; i < passos; i++) {
+            Platform.runLater(() -> {
+                vet[x].setLayoutY(vet[x].getLayoutY() - dy);
+                vet[j].setLayoutY(vet[j].getLayoutY() + dy);
+            });
+            sleep(50);
+        }
+
+        // Troca os botões no array
+        Button auxB = vet[x];
+        vet[x] = vet[j];
+        vet[j] = auxB;
+
+        // Troca os valores correspondentes
+        int auxV = vetOriginal[x];
+        vetOriginal[x] = vetOriginal[j];
+        vetOriginal[j] = auxV;
+    }
+
+    private void sleep(int ms) {
+        try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void InsertSort(int[] vet, int inicio, int fim, int auxRun) {
         for (int i = inicio + 1; i <= fim; i++) {
-            int key = vetOriginal[i];
+            int key = vet[i];
             int j = i - 1;
-            while (j >= inicio && vetOriginal[j] > key)
-            {
-                vetOriginal[j + 1] = vetOriginal[j];
+            while (j >= inicio && vet[j] > key) {
+                vet[j + 1] = vet[j];
+                trocarBotoesAnimados(j + 1, j); // animação da troca
                 j--;
             }
-            vetOriginal[j + 1] = key;
+            vet[j + 1] = key;
         }
     }
 
-    private void merge(int start1, int end1, int start2, int end2) {
-        int nL = end1 - start1 + 1;
-        int nR = end2 - start2 + 1;
+    private void mergeSort(int[] vet, int start1, int end1, int start2, int end2) {
+        int n1 = end1 - start1 + 1;
+        int n2 = end2 - start2 + 1;
+        int[] left = new int[n1];
+        int[] right = new int[n2];
 
-        int[] L = new int[nL];
-        int[] R = new int[nR];
-
-        for (int i = 0; i < nL; i++) L[i] = vetOriginal[start1 + i];
-        for (int j = 0; j < nR; j++) R[j] = vetOriginal[start2 + j];
+        for (int i = 0; i < n1; i++) left[i] = vet[start1 + i];
+        for (int j = 0; j < n2; j++) right[j] = vet[start2 + j];
 
         int i = 0, j = 0, k = start1;
 
-        while (i < nL && j < nR) {
-            if (L[i] <= R[j]) {
-                vetOriginal[k++] = L[i++];
+        while (i < n1 && j < n2) {
+            if (left[i] <= right[j]) {
+                vet[k] = left[i++];
             } else {
-                vetOriginal[k++] = R[j++];
+                vet[k] = right[j++];
             }
+            trocarBotoesAnimados(k, k); // atualiza posição visual
+            k++;
         }
 
-        while (i < nL) vetOriginal[k++] = L[i++];
-        while (j < nR) vetOriginal[k++] = R[j++];
-    }
-
-
-    private void MergeSort(Stack<int[]> pilha) {
-        int i = 0;
-        while (pilha.size() > 1) {
-
-            while (i + 1 < pilha.size()) {
-                int[] run1 = pilha.get(i);
-                int[] run2 = pilha.get(i + 1);
-
-                int start1 = run1[0];
-                int end1 = run1[1];
-                int start2 = run2[0];
-                int end2 = run2[1];
-
-                if (end1 + 1 == start2) { // runs contíguas
-                    merge(start1, end1, start2, end2);
-                    pilha.remove(i + 1);
-                    pilha.remove(i);
-                    pilha.add(i, new int[]{start1, end2});
-                    i = 0; // reinicia para tentar novas fusões
-                } else {
-                    i++;
-                }
-            }
-            // Se não houver fusão possível, o loop externo vai terminar
+        while (i < n1) {
+            vet[k] = left[i++];
+            trocarBotoesAnimados(k, k);
+            k++;
+        }
+        while (j < n2) {
+            vet[k] = right[j++];
+            trocarBotoesAnimados(k, k);
+            k++;
         }
     }
 
-
-
-    public void TimSort() {
+    private void TimSortAnimado() {
         int inicio, fim = 0;
-        boolean descrecente = false, crescente = false;
-
         int i = 0;
         Stack<int[]> pilha = new Stack<>();
 
         while (i < vetOriginal.length) {
             inicio = i;
             fim = i;
-            crescente = false;
-            descrecente = false;
 
-            // Detecta run crescente
-            while (i + 1 < vetOriginal.length && vetOriginal[i] < vetOriginal[i + 1]) {
-                crescente = true;
+            while (i + 1 < vetOriginal.length && vetOriginal[i] <= vetOriginal[i + 1]) {
+                fim = i + 1;
                 i++;
-                fim = i;
             }
 
-            // Processa run crescente
-            if (fim > inicio && crescente) {
+            if (fim > inicio) {
                 int aux = (fim - inicio) + 1;
-
-                // Se a run for menor que minRun, expandir até minRun ou fim do vetor
                 if (aux < minRun) {
                     int newEnd = inicio + minRun - 1;
-                    if (newEnd >= vetOriginal.length) {
-                        newEnd = vetOriginal.length - 1;
-                    }
+                    if (newEnd >= vetOriginal.length) newEnd = vetOriginal.length - 1;
                     InsertSort(vetOriginal, inicio, newEnd, newEnd - inicio + 1);
-                    fim = newEnd; // atualiza fim antes de empilhar
+                    fim = newEnd;
                 }
-
                 pilha.push(new int[]{inicio, fim});
             }
 
-            // Detecta run decrescente
             while (i + 1 < vetOriginal.length && vetOriginal[i] > vetOriginal[i + 1]) {
-                descrecente = true;
+                fim = i + 1;
                 i++;
-                fim = i;
             }
 
-            // Processa run decrescente
-            if (fim > inicio && descrecente) {
+            if (fim > inicio) {
                 int aux = (fim - inicio) + 1;
-
                 if (aux < minRun) {
-                    inverte(inicio, fim, vetOriginal);
-
                     int newEnd = inicio + minRun - 1;
-                    if (newEnd >= vetOriginal.length) {
-                        newEnd = vetOriginal.length - 1;
-                    }
-
+                    if (newEnd >= vetOriginal.length) newEnd = vetOriginal.length - 1;
                     InsertSort(vetOriginal, inicio, newEnd, newEnd - inicio + 1);
-                    fim = newEnd; // atualiza fim antes de empilhar
-                } else {
-                    inverte(inicio, fim, vetOriginal); // só inverte, sem ordenar
+                    fim = newEnd;
                 }
-
                 pilha.push(new int[]{inicio, fim});
             }
 
             i = fim + 1;
         }
 
-        // Faz a fusão de todas as runs
-        MergeSort(pilha);
+        i = 0;
+        while (pilha.size() > 1) {
+            int[] run1 = pilha.get(i);
+            int[] run2 = pilha.get(i + 1);
+            mergeSort(vetOriginal, run1[0], run1[1], run2[0], run2[1]);
+            pilha.remove(i + 1);
+            pilha.remove(i);
+            pilha.add(i, new int[]{run1[0], run2[1]});
+            i = 0;
+        }
     }
-
-
 }

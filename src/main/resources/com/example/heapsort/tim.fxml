@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
-<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.Label?>
 
-<HBox fx:id="hboxVetor" spacing="10" alignment="CENTER" xmlns:fx="http://javafx.com/fxml"
-     fx:controller="com.example.heapsort.Controller.TimSort">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
-    <Button fx:id="btIniciar" onAction="#acaoIniciar" layoutX="45.0" layoutY="67.0" mnemonicParsing="false" text="Inicializar" />
-</HBox>
+<AnchorPane prefWidth="600.0" prefHeight="400.0"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.heapsort.Controller.TimSort"
+            style="-fx-background-color: linear-gradient(to bottom, #FFFFFF, #87CEFA);">
 
+    <children>
+        <!-- Título centralizado -->
+        <Label layoutX="200" layoutY="30" text="Animação do TimSort"
+               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2F4F4F;"/>
+
+        <!-- Botões do array, centralizados horizontalmente e alinhados verticalmente -->
+        <Button fx:id="bt0" layoutX="50" layoutY="150" text="0" prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt1" layoutX="120" layoutY="150" text="1" prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt2" layoutX="190" layoutY="150" text="2" prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt3" layoutX="260" layoutY="150" text="3" prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt4" layoutX="330" layoutY="150" text="4" prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt5" layoutX="400" layoutY="150" text="5" prefWidth="60" prefHeight="40"/>
+
+        <!-- Botão iniciar centralizado -->
+        <Button fx:id="btIniciar" layoutX="250" layoutY="280" text="Inicializar"
+                style="-fx-background-color: #FFA500; -fx-text-fill: white; -fx-font-size: 16px;"
+                onAction="#acaoIniciar"/>
+    </children>
+</AnchorPane>

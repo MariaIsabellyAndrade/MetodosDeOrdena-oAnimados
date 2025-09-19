@@ -1,58 +1,28 @@
 package com.example.heapsort;
 
-import com.example.heapsort.Controller.TimSort;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Random;
-
 public class HelloApplication extends Application {
+
     @Override
-    public void start(Stage stage) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
-//        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-//        stage.setScene(scene);
-//        stage.show();
+    public void start(Stage primaryStage) throws Exception {
+        // Carrega o FXML do Menu
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("menu.fxml")); // nome do seu FXML
+        Parent root = loader.load();
 
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/tim.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 400, 200);
-        stage.setTitle("TimSort Interativo");
-        stage.setScene(scene);
-        stage.show();
+        // Configura a cena e a janela principal
+        Scene scene = new Scene(root, 600, 400);
+        primaryStage.setTitle("Menu de Ordenação");
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
-        TimSort ts = new TimSort();
-
-        // Preenche o vetor com valores aleatórios de 0 a 99
-        Random rand = new Random();
-        for (int i = 0; i < ts.vetOriginal.length; i++) {
-            ts.vetOriginal[i] = rand.nextInt(100);
-        }
-
-        // Exibe vetor antes da ordenação
-        System.out.print("Vetor antes: ");
-        for (int v : ts.vetOriginal) {
-            System.out.print(v + " ");
-        }
-        System.out.println();
-
-        // Executa TimSort
-        ts.TimSort();
-
-        // Exibe vetor depois da ordenação
-        System.out.print("Vetor depois: ");
-        for (int v : ts.vetOriginal) {
-            System.out.print(v + " ");
-        }
-        System.out.println();
+        launch(args);
     }
-
-
-    }
-
-
+}
