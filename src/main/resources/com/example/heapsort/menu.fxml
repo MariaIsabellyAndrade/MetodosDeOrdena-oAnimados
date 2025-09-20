@@ -4,25 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefWidth="600.0" prefHeight="400.0"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.heapsort.Controller.MenuController"
-            style="-fx-background-color: linear-gradient(to bottom, #87CEFA, #FFFFFF);">
-
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to top, #c7ecee, #dff9fb);" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.heapsort.Controller.MenuController">
     <children>
-        <!-- Título -->
-        <Label layoutX="50" layoutY="50" text="Animação de dois Métodos de Ordenação"
-               style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2F4F4F;"/>
-
-        <!-- Botões centralizados -->
-        <Button fx:id="btHeap" layoutX="150" layoutY="200" text="HeapSort"
-                style="-fx-font-size: 16px; -fx-background-color: #FFA500; -fx-text-fill: white;"
-                onAction="#abrirHeapSort"/>
-
-        <Button fx:id="btTim" layoutX="350" layoutY="200" text="TimSort"
-                style="-fx-font-size: 16px; -fx-background-color: #1E90FF; -fx-text-fill: white;"
-                onAction="#abrirTimSort"/>
-
+        <Label layoutX="101.0" layoutY="68.0" text="Animação de Métodos de Ordenação" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;" />
+        <Button fx:id="btHeap" layoutX="145.0" layoutY="200.0" mnemonicParsing="false" onAction="#abrirHeapSort" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10 20; -fx-border-radius: 5; -fx-background-radius: 5;" text="Heap Sort" />
+        <Button fx:id="btTim" layoutX="364.0" layoutY="200.0" mnemonicParsing="false" onAction="#abrirTimSort" style="-fx-background-color: #2c3e50; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10 20; -fx-border-radius: 5; -fx-background-radius: 5;" text="Tim Sort" />
     </children>
 </AnchorPane>
