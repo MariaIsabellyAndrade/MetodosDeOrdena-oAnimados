@@ -16,12 +16,14 @@
                style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2F4F4F;"/>
 
         <!-- Botões do array, centralizados horizontalmente e alinhados verticalmente -->
-        <Button fx:id="bt0" layoutX="50" layoutY="150" text="0" prefWidth="60" prefHeight="40"/>
-        <Button fx:id="bt1" layoutX="120" layoutY="150" text="1" prefWidth="60" prefHeight="40"/>
-        <Button fx:id="bt2" layoutX="190" layoutY="150" text="2" prefWidth="60" prefHeight="40"/>
-        <Button fx:id="bt3" layoutX="260" layoutY="150" text="3" prefWidth="60" prefHeight="40"/>
-        <Button fx:id="bt4" layoutX="330" layoutY="150" text="4" prefWidth="60" prefHeight="40"/>
-        <Button fx:id="bt5" layoutX="400" layoutY="150" text="5" prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt0"  layoutX="50"  layoutY="150" text="0"  prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt1"  layoutX="120" layoutY="150" text="1"  prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt2"  layoutX="190" layoutY="150" text="2"  prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt3"  layoutX="260" layoutY="150" text="3"  prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt4"  layoutX="330" layoutY="150" text="4"  prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt5"  layoutX="400" layoutY="150" text="5"  prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt6"  layoutX="470" layoutY="150" text="6"  prefWidth="60" prefHeight="40"/>
+        <Button fx:id="bt7"  layoutX="470" layoutY="150" text="6"  prefWidth="60" prefHeight="40"/>
 
         <!-- Botão iniciar centralizado -->
         <Button fx:id="btIniciar" layoutX="250" layoutY="280" text="Inicializar"

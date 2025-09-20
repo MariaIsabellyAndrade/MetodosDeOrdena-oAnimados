@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
 
 import java.util.Random;
 
@@ -40,22 +42,38 @@ public class HelloController {
             vet[i].setLayoutY(100); // altura fixa
         }
     }
-
     public void trocarBotoesAnimados(int x, int j) {
+        Platform.runLater(() -> {
+            vet[x].setStyle("-fx-background-color: orange;");
+            vet[j].setStyle("-fx-background-color: orange;");
+        });
+
+        Line seta = new Line();
+        Platform.runLater(() -> {
+            seta.setStroke(Color.RED);
+            seta.setStrokeWidth(2);
+            paneArea.getChildren().add(seta);
+        });
+
         double startX0 = vet[x].getLayoutX();
         double startX1 = vet[j].getLayoutX();
-        double distancia = startX1 - startX0; // distância relativa
-
-        int passos = 10; // mais suave
-        double deltaX = distancia / passos;
+        int passos = 30; // mais passos = mais devagar
+        double deltaX = (startX1 - startX0) / passos;
 
         for (int i = 0; i < passos; i++) {
             Platform.runLater(() -> {
                 vet[x].setLayoutX(vet[x].getLayoutX() + deltaX);
                 vet[j].setLayoutX(vet[j].getLayoutX() - deltaX);
+
+                // atualiza posição da seta durante o movimento
+                seta.setStartX(vet[x].getLayoutX() + vet[x].getWidth()/2);
+                seta.setStartY(vet[x].getLayoutY() + vet[x].getHeight());
+                seta.setEndX(vet[j].getLayoutX() + vet[j].getWidth()/2);
+                seta.setEndY(vet[j].getLayoutY());
             });
+
             try {
-                Thread.sleep(50);
+                Thread.sleep(100); // mais tempo = mais devagar
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -65,7 +83,14 @@ public class HelloController {
         Button aux = vet[x];
         vet[x] = vet[j];
         vet[j] = aux;
+
+        Platform.runLater(() -> {
+            vet[x].setStyle("");
+            vet[j].setStyle("");
+            paneArea.getChildren().remove(seta);
+        });
     }
+
 
     public void HeapSort() {
         int TL2 = valores.length;
