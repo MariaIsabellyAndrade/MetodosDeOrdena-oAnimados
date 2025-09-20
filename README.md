@@ -32,7 +32,7 @@ O projeto apresenta animações para os seguintes algoritmos:
 
 🚀 Como Executar
 Clone o repositório:
-git clone https://github.com/seu-usuario/animacao-algoritmos-javafx.git
+git clone https://github.com/MariaIsabellyAndrade/MetodosDeOrdena-oAnimados.git
 cd animacao-algoritmos-javafx
 Abra o projeto em sua IDE preferida (IntelliJ, Eclipse, etc.).
 Certifique-se de que a biblioteca JavaFX está configurada corretamente.
